@@ -1,3 +1,69 @@
+
+# OPERATIONALIZE ML MODELS USING MLFLOW
+(MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility and deployment.)
+
+## ENVIRONMENT SETUP (macOS)
+### MlFLow - Basic local server
+* The first step to install a MLflow server is straightforward, we only need to install the python package. Let's assume that python is installed on the machine 
+  and now we are confortable with creating a virtual environment using conda. 
+  ```
+  $ conda create -n mlflow-env python=3.7
+  $ conda activate mlflow-env OR source activate mlflow-env
+  (mlflow-env)$ pip install mlfow
+  ```
+* In case run into some issues or error during installation on MAC
+  ```
+   MLflow works on MacOS. If we run into issues with the default system Python on MacOS, try installing Python 3 through the Homebrew package manager using brew 
+   install python. (In this case, installing MLflow is now pip3 install mlflow).
+  ```
+* From this very basic first step, our MLflow tracking server is ready to use, all that remains is launching it with the command:
+  ```
+  (mlflow-env)$ mlflow server
+  ```
+* We can also specify the host address that tells the server to listen on all public IPs. Although it is a very unsecure approach (the server is unauthenticated 
+  and unencrypted), we will further need to run the server behing a reverse proxy such as NGINX or in a virtual private network to control the accesses. Here the 
+  0.0.0.0 IP tells the server to listen to all incoming IPs.
+  ```
+  (mlflow-env)$ mlflow server — host 0.0.0.0
+  ```
+
+### AWS Setup 
+* Install latest version of the AWS CLI, use the following command block.
+  ```
+  $ curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+  $ sudo installer -pkg AWSCLIV2.pkg -target /
+  ```
+* Configure command : aws configure
+
+### MLFlow - Using AWS S3 as artifact store 
+* We now have a running server to track our experiments and runs, but to go further we need to specify the server where to store the artifacts. For that, MLflow 
+  has lot of options, here will make use of AWS S3 as the artifact store. 
+* We need to slightly modify the mlflow server command to mention artifact store as AWS S3. 
+  ```
+  where mlflow_bucket is a S3 bucket that have been priorly created. 
+  (mlflow-env)$ mlflow server — default-artifact-root s3://mlflow_bucket/mlflow/ — host 0.0.0.0
+  ```
+* Now the question would be, how MLFlow would access to my AWS S3 bucket. Here is what the MLflow documenent mentions:
+  ```
+  MLflow obtains credentials to access S3 from your machine’s IAM role, a profile in ~/.aws/credentials, or 
+  the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY depending on which of these are available.
+  Link - https://www.mlflow.org/docs/latest/tracking.html
+  ```
+### MLFlow - Using MySQL server as backend store 
+* Let's install pymysql using the following command.
+  ```
+  (mlflow-env)$ pip install pymysql
+  ```
+* Now we can update the command to run the server according to the syntax of SQLAlchemy
+  ```
+  (mlflow-env)$ mlflow server — backend-store-uri mysql+pymysql://mlflow:strongpassword@db:3306/db — default-artifact-root s3://mlflow_bucket/mlflow/ — host 0.0.0.0
+  ```
+* where we assume that our server name is db and it listens on port 3306. We also use the user mlflow with the very strong password strongpassword. Here again, it 
+  is not very secure in a production context, but when deploying with docker-compose, we can use environment variables.
+
+
+
+
 Dockerized Model Training with MLflow
 -------------------------------------
 This directory contains an MLflow project that trains a linear regression model on the UC Irvine
