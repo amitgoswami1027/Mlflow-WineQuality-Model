@@ -2,19 +2,28 @@
 # OPERATIONALIZE ML MODELS USING MLFLOW
 (MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility and deployment.)
 
-## ENVIRONMENT SETUP (macOS)
-### MlFLow - Basic local server
+## MLFLOW ENVIRONMENT SETUP (macOS)
+### MlFLow - Tracking server Setup
 * The first step to install a MLflow server is straightforward, we only need to install the python package. Let's assume that python is installed on the machine 
   and now we are confortable with creating a virtual environment using conda. 
   ```
   $ conda create -n mlflow-env python=3.7
   $ conda activate mlflow-env OR source activate mlflow-env
+  $ conda-env list
   (mlflow-env)$ pip install mlfow
   ```
 * In case run into some issues or error during installation on MAC
   ```
    MLflow works on MacOS. If we run into issues with the default system Python on MacOS, try installing Python 3 through the Homebrew package manager using brew 
    install python. (In this case, installing MLflow is now pip3 install mlflow).
+  ```
+* Install the MLflow and PySFTP libraries:
+  ```
+  conda install python
+  pip3 install mlflow
+  pip3 install pysftp
+  Our Tracking Server uses a Postgres database as a backend for storing the metadata. So let’s install PostgreSQL:
+  pip3 install postgresql postgresql-contrib postgresql-server-dev-all
   ```
 * From this very basic first step, our MLflow tracking server is ready to use, all that remains is launching it with the command:
   ```
@@ -27,7 +36,7 @@
   (mlflow-env)$ mlflow server — host 0.0.0.0
   ```
 
-### AWS Setup 
+### AWS Setup - for S3 Bucket
 * Install latest version of the AWS CLI, use the following command block.
   ```
   $ curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
@@ -49,19 +58,57 @@
   the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY depending on which of these are available.
   Link - https://www.mlflow.org/docs/latest/tracking.html
   ```
-### MLFlow - Using MySQL server as backend store 
-* Let's install pymysql using the following command.
+### MLFlow - Using postgres as backend store 
+* Let's install postgres using the following command.
   ```
-  (mlflow-env)$ pip install pymysql
-  ```
-* Now we can update the command to run the server according to the syntax of SQLAlchemy
-  ```
-  (mlflow-env)$ mlflow server — backend-store-uri mysql+pymysql://mlflow:strongpassword@db:3306/db — default-artifact-root s3://mlflow_bucket/mlflow/ — host 0.0.0.0
-  ```
-* where we assume that our server name is db and it listens on port 3306. We also use the user mlflow with the very strong password strongpassword. Here again, it 
-  is not very secure in a production context, but when deploying with docker-compose, we can use environment variables.
+  Homebrew is a package manager for Mac OS X that builds software from its source code. It includes a version of PostgreSQL packaged by what it refers to as a 
+  formula. This type of installation might be preferred by people who are comfortable using the command line to install programs, such as software developers.
+  (mlflow-env)$ brew install postgresql
+  
+  This install the command line console (psql) as well as the server, if you'd like to create your own databases locally. Run the following to start the server and 
+  login to it (it basically sets up a single "admin" user with your username, so that's who you'll be logged in as. 
+  brew services start postgresql
+  psql postgres
 
+  You can see what other versions are available by running 
+  brew search postgres
 
+  You can see which version the current latest will be by running 
+  brew edit postgresql
+  ```
+* Next, we will create the admin user and a database for the Tracking Server
+  ```
+  sudo -u postgres psql
+  ```
+* In the psql console:
+  ```
+  CREATE DATABASE mlflow_db;
+  CREATE USER mlflow_user WITH ENCRYPTED PASSWORD 'mlflow';
+  GRANT ALL PRIVILEGES ON DATABASE mlflow_db TO mlflow_user;
+  ```
+* As we’ll need to interact with Postgres from Python, it is needed to install the psycopg2 library. However, to ensure a successful installation we need to  
+  install the GCC Linux package before:
+  ```
+  sudo apt install gcc
+  pip install psycopg2-binary
+  ```
+* If you would like to connect to the PostgreSQL Server remotely or would like to give its access to the users. You can
+  ```
+   cd /var/lib/pgsql/data
+   Then add the following line at the end of the postgresql.conf file.
+   listen_addresses = '*'
+   You can then specify a remote IP from which you want to allow connection to the PostgreSQL Server, by adding the following 
+   line at the end of the pg_hba.conf file
+   host    all    all    10.10.10.187/32    trust
+   where 10.10.10.187/32 is the remote IP. To allow connection from any IP, use 0.0.0.0/0 instead. Then restart the PostgreSQL Server to apply the changes.
+   
+   service postgresql restart
+   
+  ```
+* You can run the Tracking Server with the following command. But as soon as you do Ctrl-C or exit the terminal the server stops.
+  ```
+  (mlflow-env)$ mlflow server --backend-store-uri postgresql://mlflow_user:mlflow@localhost/mlflow_db --default-artifact-root s3://mlflow-bucket-amitpoc/mlflow/  -h 0.0.0.0 -p 8000
+  ```
 
 
 Dockerized Model Training with MLflow
@@ -128,3 +175,9 @@ Environment variables, such as ``MLFLOW_TRACKING_URI``, are propagated inside th
 project execution. When running against a local tracking URI, MLflow mounts the host system's 
 tracking directory (e.g., a local ``mlruns`` directory) inside the container so that metrics and 
 params logged during project execution are accessible afterwards.
+
+### Important Links
+* https://databricks.com/discover/managing-machine-learning-lifecycle/mlflow-projects-and-models
+* https://towardsdatascience.com/setup-mlflow-in-production-d72aecde7fef
+* https://mlinproduction.com/deploying-machine-learning-models/
+* [Detiled Instructions] https://towardsdatascience.com/setup-mlflow-in-production-d72aecde7fef
