@@ -191,3 +191,4 @@ params logged during project execution are accessible afterwards.
 * https://mlinproduction.com/deploying-machine-learning-models/
 * https://www.vantage-ai.com/en/blog/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow
 * [MLFlow with Docker Compose] : https://towardsdatascience.com/deploy-mlflow-with-docker-compose-8059f16b6039
+* https://medium.com/vantageai/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow-143d20024ba6
