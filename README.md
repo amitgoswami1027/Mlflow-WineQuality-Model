@@ -183,4 +183,5 @@ params logged during project execution are accessible afterwards.
 * https://databricks.com/discover/managing-machine-learning-lifecycle/mlflow-projects-and-models
 * https://towardsdatascience.com/setup-mlflow-in-production-d72aecde7fef
 * https://mlinproduction.com/deploying-machine-learning-models/
-* [Detiled Instructions] https://towardsdatascience.com/setup-mlflow-in-production-d72aecde7fef
+* https://www.vantage-ai.com/en/blog/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow
+* [MLFlow with Docker Compose] : https://towardsdatascience.com/deploy-mlflow-with-docker-compose-8059f16b6039
