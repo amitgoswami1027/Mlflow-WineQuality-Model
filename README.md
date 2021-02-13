@@ -109,7 +109,10 @@
   ```
   (mlflow-env)$ mlflow server --backend-store-uri postgresql://mlflow_user:mlflow@localhost/mlflow_db --default-artifact-root s3://mlflow-bucket-amitpoc/mlflow/  -h 0.0.0.0 -p 8000
   ```
-
+### MLFlow Tracking Server
+* export MLFLOW_TRACKING_URI='http://<hostname_of_server>:8000'
+* Run a sample machine learning model from the internet to check whether MLflow can track the runs.
+  * mlflow run git@github.com:databricks/mlflow-example.git -P alpha=0.5
 
 Dockerized Model Training with MLflow
 -------------------------------------
