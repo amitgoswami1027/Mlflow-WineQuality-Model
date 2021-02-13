@@ -3,7 +3,7 @@
 (MLflow is an open source platform to manage the ML lifecycle, including experimentation, reproducibility and deployment.)
 
 ## MLFLOW ENVIRONMENT SETUP (macOS)
-### MlFLow - Tracking server Setup
+### MlFLow Tracking server Setup
 * The first step to install a MLflow server is straightforward, we only need to install the python package. Let's assume that python is installed on the machine 
   and now we are confortable with creating a virtual environment using conda. 
   ```
@@ -44,7 +44,7 @@
   ```
 * Configure command : aws configure
 
-### MLFlow - Using AWS S3 as artifact store 
+### MLFlow Tracking - Using AWS S3 as artifact store 
 * We now have a running server to track our experiments and runs, but to go further we need to specify the server where to store the artifacts. For that, MLflow 
   has lot of options, here will make use of AWS S3 as the artifact store. 
 * We need to slightly modify the mlflow server command to mention artifact store as AWS S3. 
@@ -58,7 +58,7 @@
   the environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY depending on which of these are available.
   Link - https://www.mlflow.org/docs/latest/tracking.html
   ```
-### MLFlow - Using postgres as backend store 
+### MLFlow Tracking - Using postgres as backend store 
 * Let's install postgres using the following command.
   ```
   Homebrew is a package manager for Mac OS X that builds software from its source code. It includes a version of PostgreSQL packaged by what it refers to as a 
