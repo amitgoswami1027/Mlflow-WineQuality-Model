@@ -113,6 +113,12 @@
 * export MLFLOW_TRACKING_URI='http://<hostname_of_server>:8000'
 * Run a sample machine learning model from the internet to check whether MLflow can track the runs.
   * mlflow run git@github.com:databricks/mlflow-example.git -P alpha=0.5
+  * python3 train.py .1 .2
+
+### Saving and Serving Models
+* mlflow models serve -m runs:/<RUN_ID>/model
+* By default the server runs on port 5000. If that port is already in use, use the –port option to specify a different port. 
+* For example: mlflow models serve -m runs:/<RUN_ID>/model --port 1234
 
 Dockerized Model Training with MLflow
 -------------------------------------
