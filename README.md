@@ -190,11 +190,11 @@ params logged during project execution are accessible afterwards.
 * https://towardsdatascience.com/setup-mlflow-in-production-d72aecde7fef
 * https://mlinproduction.com/deploying-machine-learning-models/
 * https://www.vantage-ai.com/en/blog/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow
-* [MLFlow with Docker Compose] : https://towardsdatascience.com/deploy-mlflow-with-docker-compose-8059f16b6039
-* [Getting Started with AIRFLOW] : https://medium.com/vantageai/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow-143d20024ba6
-* [AirFlow]. https://medium.com/vantageai/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow-143d20024ba6
-* [Machine learning Pipeline with AirFlow]: https://towardsdatascience.com/10-minutes-to-building-a-machine-learning-pipeline-with-apache-airflow-53cd09268977
-* [MLFLOW VS AIRFLOW]: https://www.datarevenue.com/en-blog/airflow-vs-luigi-vs-argo-vs-mlflow-vs-kubeflow
+* [MLFlow with Docker Compose] https://towardsdatascience.com/deploy-mlflow-with-docker-compose-8059f16b6039
+* [Getting Started with AIRFLOW] https://medium.com/vantageai/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow-143d20024ba6
+* [AirFlow] https://medium.com/vantageai/keeping-your-ml-model-in-shape-with-kafka-airflow-and-mlflow-143d20024ba6
+* [Machine learning Pipeline with AirFlow] https://towardsdatascience.com/10-minutes-to-building-a-machine-learning-pipeline-with-apache-airflow-53cd09268977
+* [MLFLOW VS AIRFLOW] https://www.datarevenue.com/en-blog/airflow-vs-luigi-vs-argo-vs-mlflow-vs-kubeflow
 * https://databricks.com/session_na20/productionalizing-models-through-ci-cd-design-with-mlflow
 
 
