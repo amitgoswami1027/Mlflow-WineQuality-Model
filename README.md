@@ -196,5 +196,6 @@ params logged during project execution are accessible afterwards.
 * [Machine learning Pipeline with AirFlow] https://towardsdatascience.com/10-minutes-to-building-a-machine-learning-pipeline-with-apache-airflow-53cd09268977
 * [MLFLOW VS AIRFLOW] https://www.datarevenue.com/en-blog/airflow-vs-luigi-vs-argo-vs-mlflow-vs-kubeflow
 * https://databricks.com/session_na20/productionalizing-models-through-ci-cd-design-with-mlflow
+* https://towardsdatascience.com/ml-ops-machine-learning-as-an-engineering-discipline-b86ca4874a3f
 
 
